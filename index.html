@@ -1,3 +1,528 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Error><Code>AuthenticationFailed</Code><Message>Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.
-RequestId:618915da-801e-0093-3f94-1476b6000000
-Time:2025-08-24T01:12:11.0862382Z</Message><AuthenticationErrorDetail>Signed expiry time [Sat, 23 Aug 2025 06:43:15 GMT] must be after signed start time [Sun, 24 Aug 2025 01:12:11 GMT]</AuthenticationErrorDetail></Error>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>製造業 戦略バランスボード | DEARS CONSULTING</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .slider-container {
+            position: relative;
+        }
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e5e7eb;
+            outline: none;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #2563eb;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(37, 99, 235, 0.3);
+        }
+        .success-meter {
+            background: conic-gradient(from 0deg, #dc2626 0deg, #f59e0b 120deg, #16a34a 240deg, #16a34a 360deg);
+            border-radius: 50%;
+        }
+        @media (max-width: 768px) {
+            .mobile-stack {
+                flex-direction: column;
+            }
+            .mobile-full {
+                width: 100% !important;
+            }
+            .chart-container {
+                height: 400px !important;
+            }
+            .correlation-chart {
+                height: 350px !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-6">
+        <!-- Header -->
+        <div class="gradient-bg text-white rounded-xl p-6 mb-6 card-shadow">
+            <h1 class="text-3xl font-bold mb-2">
+                <i class="fas fa-industry mr-3"></i>製造業 戦略バランスボード
+            </h1>
+            <p class="text-lg opacity-90">Industry 4.0時代の事業戦略最適化ツール - DEARS CONSULTING</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex mobile-stack gap-6">
+            <!-- Control Panel -->
+            <div class="w-full md:w-5/12 lg:w-4/12 mobile-full">
+                <div class="space-y-6">
+                    <!-- Sliders Panel -->
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h2 class="text-xl font-bold mb-6 text-gray-800">
+                            <i class="fas fa-sliders-h mr-2 text-blue-600"></i>戦略要素調整
+                        </h2>
+                        
+                        <div class="space-y-6">
+                            <div class="slider-container">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">品質管理レベル</label>
+                                <input type="range" min="1" max="100" value="75" class="slider" id="quality">
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>基本品質</span>
+                                    <span id="qualityValue" class="font-semibold text-blue-600">75</span>
+                                    <span>世界最高品質</span>
+                                </div>
+                            </div>
+
+                            <div class="slider-container">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">生産効率</label>
+                                <input type="range" min="1" max="100" value="68" class="slider" id="efficiency">
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>手作業中心</span>
+                                    <span id="efficiencyValue" class="font-semibold text-blue-600">68</span>
+                                    <span>完全自動化</span>
+                                </div>
+                            </div>
+
+                            <div class="slider-container">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">サプライチェーン強度</label>
+                                <input type="range" min="1" max="100" value="60" class="slider" id="supply">
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>単一依存</span>
+                                    <span id="supplyValue" class="font-semibold text-blue-600">60</span>
+                                    <span>完全分散</span>
+                                </div>
+                            </div>
+
+                            <div class="slider-container">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">技術革新度</label>
+                                <input type="range" min="1" max="100" value="55" class="slider" id="innovation">
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>従来技術</span>
+                                    <span id="innovationValue" class="font-semibold text-blue-600">55</span>
+                                    <span>最先端技術</span>
+                                </div>
+                            </div>
+
+                            <div class="slider-container">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">環境・安全対応</label>
+                                <input type="range" min="1" max="100" value="70" class="slider" id="environmental">
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>最低限対応</span>
+                                    <span id="environmentalValue" class="font-semibold text-blue-600">70</span>
+                                    <span>業界リーダー</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Success Indicator -->
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h3 class="text-lg font-bold mb-4 text-gray-800">
+                            <i class="fas fa-chart-pie mr-2 text-green-600"></i>事業競争力指数
+                        </h3>
+                        <div class="flex items-center justify-center mb-4">
+                            <div class="w-28 h-28 success-meter flex items-center justify-center relative">
+                                <span class="text-2xl font-bold text-white z-10" id="successRate">71%</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <span class="inline-block px-4 py-2 rounded-full text-sm font-medium" id="successLabel">良好</span>
+                        </div>
+                    </div>
+
+                    <!-- Scenario Management -->
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h3 class="text-lg font-bold mb-4 text-gray-800">
+                            <i class="fas fa-save mr-2 text-purple-600"></i>戦略シナリオ
+                        </h3>
+                        <div class="space-y-3">
+                            <button class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition font-medium" onclick="saveScenario()">
+                                <i class="fas fa-plus mr-2"></i>現在のシナリオを保存
+                            </button>
+                            <select class="w-full border border-gray-300 rounded-lg px-3 py-3" id="scenarioSelect" onchange="loadScenario()">
+                                <option value="">保存済みシナリオを選択</option>
+                            </select>
+                            <button class="w-full bg-red-500 text-white px-4 py-3 rounded-lg hover:bg-red-600 transition font-medium" onclick="clearScenarios()">
+                                <i class="fas fa-trash mr-2"></i>全シナリオクリア
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization Panel -->
+            <div class="w-full md:w-7/12 lg:w-8/12 mobile-full">
+                <div class="space-y-6">
+                    <!-- Balance Board -->
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h2 class="text-xl font-bold mb-4 text-gray-800">
+                            <i class="fas fa-radar-chart mr-2 text-blue-600"></i>製造業戦略バランス
+                        </h2>
+                        <div class="chart-container" style="height: 400px;">
+                            <canvas id="balanceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Correlation Matrix -->
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h2 class="text-xl font-bold mb-4 text-gray-800">
+                            <i class="fas fa-chart-bar mr-2 text-green-600"></i>要素間相関分析
+                        </h2>
+                        <div class="correlation-chart" style="height: 300px;">
+                            <canvas id="correlationChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Strategic Recommendations -->
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h2 class="text-xl font-bold mb-4 text-gray-800">
+                            <i class="fas fa-lightbulb mr-2 text-yellow-600"></i>Industry 4.0戦略提案
+                        </h2>
+                        <div id="recommendations" class="space-y-4">
+                            <!-- Dynamic recommendations will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-8 py-4 border-t border-gray-200">
+            <p class="text-sm text-gray-600">© 2025 DEARS CONSULTING. All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let balanceChart, correlationChart;
+        let scenarios = JSON.parse(localStorage.getItem('manufacturingScenarios')) || [];
+
+        // Initialize charts
+        function initCharts() {
+            // Balance Chart (Radar)
+            const balanceCtx = document.getElementById('balanceChart').getContext('2d');
+            balanceChart = new Chart(balanceCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['品質管理', '生産効率', 'サプライチェーン', '技術革新', '環境・安全', '収益性'],
+                    datasets: [{
+                        label: '現在の戦略バランス',
+                        data: [75, 68, 60, 55, 70, 0],
+                        backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                        borderColor: 'rgba(37, 99, 235, 1)',
+                        pointBackgroundColor: 'rgba(37, 99, 235, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(37, 99, 235, 1)',
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { display: true, color: 'rgba(0,0,0,0.1)' },
+                            grid: { color: 'rgba(0,0,0,0.1)' },
+                            pointLabels: { font: { size: 12 } },
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            ticks: { stepSize: 20 }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            // Correlation Chart (Bar)
+            const correlationCtx = document.getElementById('correlationChart').getContext('2d');
+            correlationChart = new Chart(correlationCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['品質→信頼', '効率→コスト', '供給→継続', '革新→差別化', '環境→ESG', '総合→競争力'],
+                    datasets: [{
+                        label: '相関強度',
+                        data: [0.85, 0.78, 0.72, 0.68, 0.65, 0.74],
+                        backgroundColor: [
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(34, 197, 94, 0.8)',
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(139, 92, 246, 0.8)',
+                            'rgba(236, 72, 153, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(239, 68, 68, 1)',
+                            'rgba(245, 158, 11, 1)',
+                            'rgba(34, 197, 94, 1)',
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(139, 92, 246, 1)',
+                            'rgba(236, 72, 153, 1)'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            min: 0,
+                            max: 1,
+                            ticks: { stepSize: 0.2 }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // Calculate profitability based on manufacturing-specific factors
+        function calculateProfitability(quality, efficiency, supply, innovation, environmental) {
+            // Manufacturing-specific calculation
+            const qualityImpact = quality * 0.25; // Quality affects customer trust and premium pricing
+            const efficiencyImpact = efficiency * 0.3; // Efficiency directly affects costs
+            const supplyImpact = supply * 0.15; // Supply chain stability affects continuity
+            const innovationImpact = innovation * 0.2; // Innovation affects differentiation
+            const environmentalImpact = environmental * 0.1; // ESG affects long-term sustainability
+            
+            const profitability = Math.min(100, Math.max(0, 
+                qualityImpact + efficiencyImpact + supplyImpact + innovationImpact + environmentalImpact
+            ));
+            
+            return Math.round(profitability);
+        }
+
+        // Update all visualizations
+        function updateVisualizations() {
+            const quality = parseInt(document.getElementById('quality').value);
+            const efficiency = parseInt(document.getElementById('efficiency').value);
+            const supply = parseInt(document.getElementById('supply').value);
+            const innovation = parseInt(document.getElementById('innovation').value);
+            const environmental = parseInt(document.getElementById('environmental').value);
+            
+            const profitability = calculateProfitability(quality, efficiency, supply, innovation, environmental);
+            
+            // Update value displays
+            document.getElementById('qualityValue').textContent = quality;
+            document.getElementById('efficiencyValue').textContent = efficiency;
+            document.getElementById('supplyValue').textContent = supply;
+            document.getElementById('innovationValue').textContent = innovation;
+            document.getElementById('environmentalValue').textContent = environmental;
+            
+            // Update balance chart
+            balanceChart.data.datasets[0].data = [quality, efficiency, supply, innovation, environmental, profitability];
+            balanceChart.update();
+            
+            // Update correlation data
+            const correlations = [
+                quality * 0.0085, // Quality to Trust
+                efficiency * 0.0078, // Efficiency to Cost reduction
+                supply * 0.0072, // Supply to Continuity
+                innovation * 0.0068, // Innovation to Differentiation
+                environmental * 0.0065, // Environmental to ESG
+                profitability * 0.0074 // Overall to Competitiveness
+            ];
+            correlationChart.data.datasets[0].data = correlations;
+            correlationChart.update();
+            
+            // Update success rate
+            const successRate = Math.round((quality + efficiency + supply + innovation + environmental) / 5);
+            document.getElementById('successRate').textContent = successRate + '%';
+            
+            const successLabel = document.getElementById('successLabel');
+            if (successRate >= 80) {
+                successLabel.textContent = '業界リーダー';
+                successLabel.className = 'inline-block px-4 py-2 rounded-full text-sm font-medium bg-green-100 text-green-800';
+            } else if (successRate >= 65) {
+                successLabel.textContent = '競争優位';
+                successLabel.className = 'inline-block px-4 py-2 rounded-full text-sm font-medium bg-blue-100 text-blue-800';
+            } else if (successRate >= 50) {
+                successLabel.textContent = '標準レベル';
+                successLabel.className = 'inline-block px-4 py-2 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800';
+            } else {
+                successLabel.textContent = '改善必要';
+                successLabel.className = 'inline-block px-4 py-2 rounded-full text-sm font-medium bg-red-100 text-red-800';
+            }
+            
+            // Update recommendations
+            updateRecommendations(quality, efficiency, supply, innovation, environmental, profitability);
+        }
+
+        // Generate manufacturing-specific strategic recommendations
+        function updateRecommendations(quality, efficiency, supply, innovation, environmental, profitability) {
+            const recommendations = [];
+            
+            if (quality > 80 && efficiency < 60) {
+                recommendations.push({
+                    icon: 'fas fa-robot',
+                    type: 'info',
+                    title: 'スマートファクトリー化推進',
+                    text: '高品質を維持しながら、IoT・AIを活用した生産効率向上を検討してください。'
+                });
+            }
+            
+            if (supply < 50) {
+                recommendations.push({
+                    icon: 'fas fa-exclamation-triangle',
+                    type: 'warning',
+                    title: 'サプライチェーンリスク対策',
+                    text: '供給の安定性向上が急務です。複数調達先の確保とBCP策定を推進してください。'
+                });
+            }
+            
+            if (innovation < 60 && profitability < 60) {
+                recommendations.push({
+                    icon: 'fas fa-lightbulb',
+                    type: 'warning',
+                    title: 'R&D投資強化が必要',
+                    text: '技術革新による差別化で収益性を向上させる戦略を検討してください。'
+                });
+            }
+            
+            if (environmental > 75) {
+                recommendations.push({
+                    icon: 'fas fa-leaf',
+                    type: 'success',
+                    title: 'ESG経営の実践',
+                    text: '優れた環境・安全対応により、持続可能な競争優位を確立できています。'
+                });
+            }
+            
+            if (efficiency > 80 && quality > 80) {
+                recommendations.push({
+                    icon: 'fas fa-trophy',
+                    type: 'success',
+                    title: '製造業Excellence達成',
+                    text: '高品質・高効率の両立により、業界リーダーとしての地位を確立しています。'
+                });
+            }
+            
+            if (innovation > 70 && environmental > 70) {
+                recommendations.push({
+                    icon: 'fas fa-star',
+                    type: 'success',
+                    title: 'Industry 4.0リーダー',
+                    text: '技術革新と環境対応の両立で、次世代製造業のモデルケースとなっています。'
+                });
+            }
+            
+            const recommendationsHtml = recommendations.map(rec => `
+                <div class="flex items-start p-4 rounded-lg ${rec.type === 'success' ? 'bg-green-50 border-l-4 border-green-400' : 
+                    rec.type === 'warning' ? 'bg-yellow-50 border-l-4 border-yellow-400' : 'bg-blue-50 border-l-4 border-blue-400'}">
+                    <i class="${rec.icon} ${rec.type === 'success' ? 'text-green-600' : 
+                        rec.type === 'warning' ? 'text-yellow-600' : 'text-blue-600'} mt-1 mr-3 text-lg"></i>
+                    <div>
+                        <h4 class="font-semibold ${rec.type === 'success' ? 'text-green-800' : 
+                            rec.type === 'warning' ? 'text-yellow-800' : 'text-blue-800'}">${rec.title}</h4>
+                        <p class="text-sm ${rec.type === 'success' ? 'text-green-700' : 
+                            rec.type === 'warning' ? 'text-yellow-700' : 'text-blue-700'} mt-1">${rec.text}</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('recommendations').innerHTML = recommendationsHtml;
+        }
+
+        // Scenario management functions
+        function saveScenario() {
+            const name = prompt('シナリオ名を入力してください (例: 現状分析、改善案A、目標設定):');
+            if (!name) return;
+            
+            const scenario = {
+                name: name,
+                timestamp: new Date().toLocaleString(),
+                values: {
+                    quality: parseInt(document.getElementById('quality').value),
+                    efficiency: parseInt(document.getElementById('efficiency').value),
+                    supply: parseInt(document.getElementById('supply').value),
+                    innovation: parseInt(document.getElementById('innovation').value),
+                    environmental: parseInt(document.getElementById('environmental').value)
+                }
+            };
+            
+            scenarios.push(scenario);
+            localStorage.setItem('manufacturingScenarios', JSON.stringify(scenarios));
+            updateScenarioSelect();
+            alert('製造業戦略シナリオが保存されました！');
+        }
+
+        function loadScenario() {
+            const select = document.getElementById('scenarioSelect');
+            const selectedIndex = select.selectedIndex - 1;
+            
+            if (selectedIndex >= 0 && scenarios[selectedIndex]) {
+                const scenario = scenarios[selectedIndex];
+                document.getElementById('quality').value = scenario.values.quality;
+                document.getElementById('efficiency').value = scenario.values.efficiency;
+                document.getElementById('supply').value = scenario.values.supply;
+                document.getElementById('innovation').value = scenario.values.innovation;
+                document.getElementById('environmental').value = scenario.values.environmental;
+                updateVisualizations();
+            }
+        }
+
+        function clearScenarios() {
+            if (confirm('全ての製造業戦略シナリオを削除しますか？')) {
+                scenarios = [];
+                localStorage.removeItem('manufacturingScenarios');
+                updateScenarioSelect();
+                alert('全シナリオが削除されました。');
+            }
+        }
+
+        function updateScenarioSelect() {
+            const select = document.getElementById('scenarioSelect');
+            select.innerHTML = '<option value="">保存済みシナリオを選択</option>';
+            scenarios.forEach((scenario, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `${scenario.name} (${scenario.timestamp})`;
+                select.appendChild(option);
+            });
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            updateScenarioSelect();
+            updateVisualizations();
+            
+            // Add event listeners to all sliders
+            ['quality', 'efficiency', 'supply', 'innovation', 'environmental'].forEach(id => {
+                document.getElementById(id).addEventListener('input', updateVisualizations);
+            });
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDubs9YuS%2BWgmRASunCsfGS0wCJ%2FDe%2Btc19GADVOa%2BeATmfSZ6Ud%2FbeT43d%2BglLCgKfcGU%2FZ09kGKzI%2BOZAL%2B6M9RJD4AQepsxVntR9vjh99XXniugNxoauZejfsdifsP2J38Twz2AFN%2Bnhr0clO%2FdTg9M1uMNg1Msqc80Hc9kqUsJ2Fc0HLgudy19RXTY%2FmT6IYvGHWWgXFktbGge43K95SZcIroSQQ%2BT1uUWN0PE3%2F%2FogYP%2Bt0%2BaLbu9P%2BQn%2FveS%2B4dIGf1HxKfpSUaTfWU8O1JXeLb0KTnZ1qKa2J1Ujou%2FHyjcuWqB1IPQ42P5rhv19qqXqvlUFaiGWpd9sN9RYOr7dkophwS%2FBWxMp3JZuHpA9a2ODTROkV7unM2hMbcJ6b1rNjcPbifM7xevguviRiuAcRktl2EfPnlD15Vf86dcH8dsXWGHGfqH3wH0XHTZwxXANqDWLm2kA%2BWqucN1RvSCLf%2BjfrY%2Fz3EcTocdJX8Z2UwfVW6rmSGUQPWtF6qay2FlTSM%2BjLKCmsXy2TTzlw%3D";
+        window.__genspark_locale = "ja-JP";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDubs9YuS+WgmRASunCsfGS0wCJ/De+tc19GADVOa+eATmfSZ6Ud/beT43d+glLCgKfcGU/Z09kGKzI+OZAL+6M9RJD4AQepsxVntR9vjh99XXniugNxoauZejfsdifsP2J38Twz2AFN+nhr0clO/dTg9M1uMNg1Msqc80Hc9kqUsJ2Fc0HLgudy19RXTY/mT6IYvGHWWgXFktbGge43K95SZcIroSQQ+T1uUWN0PE3//ogYP+t0+aLbu9P+Qn/veS+4dIGf1HxKfpSUaTfWU8O1JXeLb0KTnZ1qKa2J1Ujou/HyjcuWqB1IPQ42P5rhv19qqXqvlUFaiGWpd9sN9RYOr7dkophwS/BWxMp3JZuHpA9a2ODTROkV7unM2hMbcJ6b1rNjcPbifM7xevguviRiuAcRktl2EfPnlD15Vf86dcH8dsXWGHGfqH3wH0XHTZwxXANqDWLm2kA+WqucN1RvSCLf+jfrY/z3EcTocdJX8Z2UwfVW6rmSGUQPWtF6qay2FlTSM+jLKCmsXy2TTzlw=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
